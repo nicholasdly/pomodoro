@@ -5,7 +5,7 @@ import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <div>
+    <div className="bg-neutral-800 text-red-500 min-h-screen">
       <Timer />
       <Description />
       <Footer />
