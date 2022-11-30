@@ -7,10 +7,10 @@ export default function App() {
   
   // Default time
   const time = {
-    workMinutes: 0,
-    workSeconds: 15,
-    breakMinutes: 0,
-    breakSeconds: 5
+    workMinutes: 25,
+    workSeconds: 0,
+    breakMinutes: 5,
+    breakSeconds: 0
   };
   
   return (
