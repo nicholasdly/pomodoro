@@ -31,8 +31,6 @@
 - [x] Add a descriptive footer
 - [ ] Options menu
   - [ ] Customizable intervals
-  - [ ] Mute button
-  - [ ] Light/dark mode switch
 - [ ] Backend
   - [ ] User authentication
   - [ ] Point system
