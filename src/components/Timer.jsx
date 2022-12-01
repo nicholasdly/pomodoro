@@ -14,8 +14,8 @@ export default function Timer({time}) {
     const [working, setWorking] = useState(true);  // Work state
 
     const buttonSound = new Audio(button);
-    buttonSound.volume = 0.25;
     const alarmSound = new Audio(alarm);
+    buttonSound.volume = 0.25;
 
     /**
      * Updates the time state

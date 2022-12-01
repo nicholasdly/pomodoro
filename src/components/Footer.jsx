@@ -6,14 +6,14 @@ export default function Footer() {
 
             <p>
                 Check out the {}
-                <a className="underline" href="" target="_blank" rel="noreferrer noopener">
+                <a className="underline" href="https://github.com/nicholasdly/tomatera" target="_blank" rel="noreferrer noopener">
                     source code
                 </a>
                 !
             </p>
             <p>
                 To learn more about me, visit {}
-                <a className="underline" href="https://www.nicholasly.com/" target="_blank" rel="noreferrer noopener">
+                <a className="underline" href="https://nicholasly.com/" target="_blank" rel="noreferrer noopener">
                     my website
                 </a>
                 !
