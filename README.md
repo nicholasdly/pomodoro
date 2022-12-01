@@ -19,7 +19,7 @@
 </p>
 <p>
   <b>Tomatera</b> started as a web development learning experience, but now aims to be a high quality pomodoro timer for anyone to use.
-  Built with React by a student for students, <b>Tomatera</b> is defined by functionality and minimalism.
+  Built with Vite and React by a student for students, <b>Tomatera</b> is defined by functionality and minimalism.
   </br></br>
   Fun Fact: <b>Tomatera</b> is named after the Spanish translation for "tomato plant", which is inspired by <i>pomodoro</i> being the Italian translation for "tomato"!
 </p>
