@@ -29,8 +29,8 @@
 - [x] Automate timer starting
 - [x] Add satisfying sounds
 - [x] Add a descriptive footer
-- [ ] Options menu
-  - [ ] Customizable intervals
+- [X] Options menu
+  - [X] Customizable intervals
   - [ ] Mute button
   - [ ] Light/dark mode switch
 - [ ] Backend
