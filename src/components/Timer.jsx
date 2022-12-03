@@ -71,13 +71,13 @@ export default function Timer({time}) {
         let inputWorkMinutes = Number(document.getElementById("workMinutes").value);
         let inputBreakMinutes = Number(document.getElementById("breakMinutes").value);
 
-        if (inputWorkMinutes > 0) {
+        if (inputWorkMinutes > 0 && inputWorkMinutes <= 60) {
             time.workMinutes = inputWorkMinutes;
         } else {
             time.workMinutes = 25;
         }
 
-        if (inputBreakMinutes > 0) {
+        if (inputBreakMinutes > 0 && inputBreakMinutes <= 60) {
             time.breakMinutes = inputBreakMinutes;
         } else  {
             time.breakMinutes = 5;
@@ -123,15 +123,15 @@ export default function Timer({time}) {
 
                 <div>
                     <label className="m-1">
-                        Work Minutes
+                        Work Minutes (1-60)
                     </label>
-                    <input type="number" min="1" id="workMinutes" placeholder="25" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2" />
+                    <input type="number" min="1" max="60" id="workMinutes" placeholder="25" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2" />
                 </div>
                 <div>
                     <label className="m-1">
-                        Break Minutes
+                        Break Minutes (1-60)
                     </label>
-                    <input type="number" min="1" id="breakMinutes" name="settings" placeholder="5" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2" />
+                    <input type="number" min="1" max="60" id="breakMinutes" name="settings" placeholder="5" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2" />
                 </div>
                 <button onClick={onApply} className='bg-neutral-700 py-2 px-5 text-2xl rounded-2xl mt-5 duration-300 hover:bg-red-500 hover:text-neutral-700 active:scale-90'>
                     Apply & Reset
