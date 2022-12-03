@@ -107,7 +107,7 @@ export default function Timer({time}) {
         <>
             <button className="fixed left-7 top-7 rounded-[50%]" onClick={toggleMenu}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" className="w-12 h-12 text-neutral-600 hover:text-red-500 duration-300 hover:rotate-90 active:scale-90">
-                <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                    <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
                 </svg>
             </button>
 
@@ -116,18 +116,22 @@ export default function Timer({time}) {
                 
                 <button className="mb-5 rounded-[50%]" onClick={toggleMenu}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" className="w-12 h-12 text-red-500 hover:text-neutral-600 duration-300 hover:rotate-90 active:scale-90">
-                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                     </svg>
                 </button>
 
                 <div>
-                    <label className="m-1">Work Minutes</label>
-                    <input type="number" min="1" id="workMinutes" placeholder="25" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2"></input>
+                    <label className="m-1">
+                        Work Minutes
+                    </label>
+                    <input type="number" min="1" id="workMinutes" placeholder="25" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2" />
                 </div>
                 <div>
-                    <label className="m-1">Break Minutes</label>
-                    <input type="number" min="1" id="breakMinutes" name="settings" placeholder="5" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2"></input>
+                    <label className="m-1">
+                        Break Minutes
+                    </label>
+                    <input type="number" min="1" id="breakMinutes" name="settings" placeholder="5" className="text-neutral-900 bg-neutral-50 focus:outline-none focus:ring focus:ring-red-500 p-1 w-16 m-2" />
                 </div>
                 <button onClick={onApply} className='bg-neutral-700 py-2 px-5 text-2xl rounded-2xl mt-5 duration-300 hover:bg-red-500 hover:text-neutral-700 active:scale-90'>
                     Apply & Reset
