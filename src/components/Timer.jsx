@@ -93,7 +93,7 @@ export default function Timer({time}) {
     // Updates the timer every 1000ms
     useEffect(function() {
         if (!paused) {
-            document.title = `Tomatera :: ${timerText}`;
+            document.title = `${timerText}`;
             const timer = setInterval(() => { tick(); }, 1000);
             return function() { clearInterval(timer); }
         } else {
