@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/images/logo.png" width="100"></img>
+  <img src="src/assets/logo.png" width="100"></img>
 </p>
 <h3 align="center">Tomatera is an automatic pomodoro timer.</h3>
 <p align="center">
@@ -14,9 +14,6 @@
 
 ## About the Project
 
-<p align="center">
-  <img src="public/images/screenshot.png" width="700"></img>
-</p>
 <p>
   <b>Tomatera</b> started as a web development learning experience, but now aims to be a high quality pomodoro timer for anyone to use.
   Built with Vite and React by a student for students, <b>Tomatera</b> is defined by functionality and minimalism.

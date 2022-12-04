@@ -13,7 +13,7 @@ export default function Description() {
                 <br/>
                 By taking routine breaks, you stay <b>motivated</b> and therefore more <b>productive</b>.
                 <br/><br/>
-                <b>Tomatera</b> aims to help you apply the pomodoro technique and keep track of your time by automatically switching between 25 minute and 5 minute work/break timers.
+                <b>Tomatera</b> aims to help you apply the pomodoro technique and keep track of your time by automatically switching between a work timer and a break timer.
                 <br/><br/>
                 <b>A short jingle will play at the end of each timer.</b>
             </p>
