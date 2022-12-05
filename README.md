@@ -28,8 +28,8 @@
 - [x] Add a descriptive footer
 - [X] Options menu
   - [X] Customizable intervals
-  - [ ] Mute button
-  - [ ] Light/dark mode switch
+  - [ ] Volume controls
+  - [ ] Color themes
 - [ ] Backend
   - [ ] User authentication
   - [ ] Point system
