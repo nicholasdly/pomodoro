@@ -88,7 +88,7 @@ export default function Timer({time}) {
     });
 
     let openMenuCSS = "fixed left-5 top-5 rounded-[50%] duration-300".concat(isOpen ? " opacity-0" : "")
-    let menuCSS = "fixed z-10 bg-neutral-900 bg-opacity-75 w-fit h-[100vh] px-4 duration-300".concat(isOpen ? "" : " translate-x-[-100%]");
+    let menuCSS = "fixed z-10 bg-neutral-900 bg-opacity-75 w-80 h-[100vh] px-4 duration-300".concat(isOpen ? "" : " translate-x-[-100%]");
 
     return (
         <>
