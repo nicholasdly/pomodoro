@@ -111,12 +111,12 @@ export default function Timer({time}) {
                     <label className="m-1">
                         Work Minutes: {time.workMinutes}
                     </label>
-                    <input type="range" min="1" max="60" defaultValue="25" id="workSlider" className="accent-red-500 focus:outline-none mb-4" />
+                    <input type="range" min="5" max="60" step="5" defaultValue="25" id="workSlider" className="accent-red-500 focus:outline-none mb-4" />
 
                     <label className="m-1">
                         Break Minutes: {time.breakMinutes}
                     </label>
-                    <input type="range" min="1" max="60" defaultValue="5" id="breakSlider" className="accent-red-500 focus:outline-none mb-4" />
+                    <input type="range" min="5" max="60" step="5" defaultValue="5" id="breakSlider" className="accent-red-500 focus:outline-none mb-4" />
 
                 </div>
             </div>
