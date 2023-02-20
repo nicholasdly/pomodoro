@@ -1,36 +1,38 @@
-<p align="center">
-  <img src="src/assets/logo.png" width="100"></img>
-</p>
-<h3 align="center">Tomatera is an automatic pomodoro timer.</h3>
-<p align="center">
-  The <a href="https://en.wikipedia.org/wiki/Pomodoro_Technique">pomodoro technique</a> is a method of time management through intervals.
-  <br/>
-  By taking routine breaks, you stay <b>motivated</b> and therefore more <b>productive</b>.
-  </br>
-  <b>Tomatera</b> aims to help you use the technique by automatically switching between 25 minute and 5 minute work/break timers.
-  </br><br/>
-  Try it out at <a href="https://tomatera.dev">tomatera.dev</a>!
-</p>
+# create-svelte
 
-## About the Project
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
 
-<p>
-  <b>Tomatera</b> started as a web development learning experience, but now aims to be a high quality pomodoro timer for anyone to use.
-  Built with Vite and React by a student for students, <b>Tomatera</b> is defined by functionality and minimalism.
-  </br></br>
-  Fun Fact: <b>Tomatera</b> is named after the Spanish translation for "tomato plant", which is inspired by <i>pomodoro</i> being the Italian translation for "tomato"!
-</p>
+## Creating a project
 
-## Roadmap
+If you're seeing this, you've probably already done this step. Congrats!
 
-- [x] Automate timer starting
-- [x] Add satisfying sounds
-- [x] Add a descriptive footer
-- [X] Options menu
-  - [X] Customizable intervals
-  - [ ] Volume controls
-  - [ ] Color themes
-- [ ] Backend
-  - [ ] User authentication
-  - [ ] Point system
-  - [ ] Leaderboards
+```bash
+# create a new project in the current directory
+npm create svelte@latest
+
+# create a new project in my-app
+npm create svelte@latest my-app
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
