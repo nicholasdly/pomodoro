@@ -1,14 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js,jsx}"],
-  darkMode: 'class',
+  content: ["./src/**/*.{html,svelte}"],
+  darkMode: "class",
   theme: {
     extend: {
       fontFamily: {
-        sans: ['"DM Sans"', 'sans'],
-        mono: ['"DM Mono"', 'mono']
+        mono: ['Inconsolata', 'monospace']
       }
     },
+  },
+  future: {
+    hoverOnlyWhenSupported: true
   },
   plugins: [],
 }
