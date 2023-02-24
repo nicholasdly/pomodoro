@@ -8,7 +8,7 @@
   </br></br>
 </div
 
-I initially created Tomatera as my first individual web development project, considering at the time I was a student who actively utilized the [pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique). Since then, I've learned a lot about web development, and have migrated this project from vanilla React to SvelteKit. Now, Tomatera is a mini passion project of mine, and I am constantly looking for ways to improve it!
+What started as my first individual web development project quickly grew to become a mini passion project of mine. Made by a computer science student who actively utilizes the [pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique), Tomatera is a functional yet minimal pomodoro timer to help anyone balance their time and improve their productivity.
 
 - Framework: [SvelteKit](https://kit.svelte.dev/)
 - Database: [Supabase](https://supabase.com/)
