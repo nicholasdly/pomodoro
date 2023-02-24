@@ -15,6 +15,7 @@
     let clock;
     let paused = true;
     let breaktime = false;
+    let configurable = true;
     
     onMount(() => {
         break_audio.volume = 0.7;
@@ -28,9 +29,6 @@
         if (local_break != null) { break_minutes = local_break; }
     });
 
-    /**
-     * Registers a single tick on the timer.
-     */
     function tick() {
         if (paused) return;
         if (minutes === 0 && seconds === 0) {
@@ -52,9 +50,6 @@
         }
     }
 
-    /**
-     * Toggles the pause state of the timer.
-     */
     function toggle_pause() {
         if (paused) {
             clock = setInterval(() => {
@@ -68,9 +63,6 @@
         }
     }
 
-    /**
-     * Resets the timer.
-     */
     function reset() {
         clearInterval(clock);
         paused = true;
@@ -107,26 +99,26 @@
         <label for="minutes" class="whitespace-pre">
             {work_minutes.toString().padStart(3, ' ')} work minutes
         </label>
-        <input class="accent-neutral-500" id="minutes" type=range bind:value={work_minutes} min=5 max=60 step=5 on:input={reset} on:change={() => localStorage.setItem('work_minutes', work_minutes.toString())} disabled={!paused}>
+        <input class="accent-neutral-500" id="minutes" type=range bind:value={work_minutes} min=5 max=60 step=5 on:input={reset} on:change={() => localStorage.setItem('work_minutes', work_minutes.toString())} disabled={!configurable}>
     </div>
     <div class="flex items-center font-mono gap-2">
         <label for="minutes">
             {break_minutes} break minutes
         </label>
-        <input class="accent-neutral-500" id="minutes" type=range bind:value={break_minutes} min=1 max=30 step=1 on:input={reset} on:change={() => localStorage.setItem('break_minutes', break_minutes.toString())} disabled={!paused}>
+        <input class="accent-neutral-500" id="minutes" type=range bind:value={break_minutes} min=1 max=30 step=1 on:input={reset} on:change={() => localStorage.setItem('break_minutes', break_minutes.toString())} disabled={!configurable}>
     </div>
 </div>
 
 <!-- Timer Controls -->
 <div class="flex flex-row items-center gap-x-8 md:gap-x-16">
-    <button on:click={toggle_pause} class="flex gap-1 md:gap-2 group">
-        {#each (paused ? 'START' : 'PAUSE') as symbol}
+    <button on:click={() => { toggle_pause(); configurable=false; }} class="flex gap-1 md:gap-2 group">
+        {#each (paused ? (configurable ? 'START' : 'RESUME') : 'PAUSE') as symbol}
             <div class="font-mono text-[5px] md:text-[8px] whitespace-pre font-bold leading-none text-start opacity-60 group-hover:opacity-100">
                 {ascii[symbol]}
             </div>
         {/each}
     </button>
-    <button on:click={reset} class="flex gap-1 md:gap-2 group">
+    <button on:click={() => { reset(); configurable=true; }} class="flex gap-1 md:gap-2 group">
         {#each 'RESET' as symbol}
             <div class="font-mono text-[5px] md:text-[8px] whitespace-pre font-bold leading-none text-start opacity-60 group-hover:opacity-100">
                 {ascii[symbol]}

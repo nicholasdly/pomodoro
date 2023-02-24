@@ -1,27 +1,24 @@
 {
-	"name": "tomatera",
+	"name": "tomatera.dev",
 	"version": "0.0.1",
-	"private": true,
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
-		"lint": "eslint ."
+		"preview": "vite preview"
 	},
 	"devDependencies": {
+		"@fontsource/fira-mono": "^4.5.10",
+		"@neoconfetti/svelte": "^1.0.0",
 		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/adapter-vercel": "^2.1.0",
 		"@sveltejs/kit": "^1.5.0",
-		"eslint-plugin-svelte3": "^4.0.0",
+		"autoprefixer": "^10.4.13",
+		"postcss": "^8.4.21",
 		"svelte": "^3.54.0",
+		"tailwindcss": "^3.2.7",
 		"vite": "^4.0.0"
 	},
 	"type": "module",
 	"dependencies": {
-		"@supabase/supabase-js": "^2.8.0",
-		"autoprefixer": "^10.4.13",
-		"eslint": "^8.34.0",
-		"postcss": "^8.4.21",
-		"tailwindcss": "^3.2.7"
+		"@supabase/supabase-js": "^2.8.0"
 	}
 }
