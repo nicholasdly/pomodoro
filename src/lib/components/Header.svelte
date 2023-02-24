@@ -25,7 +25,7 @@
         </p>
     {/await}
 
-    <!-- Title -->
+    <!-- Header -->
     <div class="flex gap-1 md:gap-3 justify-center">
         {#each 'TOMATERA' as symbol}
             <div class="font-mono text-[5px] md:text-[11px] whitespace-pre font-bold leading-none text-start">

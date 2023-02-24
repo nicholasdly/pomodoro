@@ -7,30 +7,31 @@
     // Duration of each round
     let work_minutes = 50;
     let break_minutes = 10;
-
-    // Displayed time variables
-    let minutes = work_minutes;
-    let seconds = 0;
     
+    // Displayed time variables
+    let minutes = 0;
+    let seconds = 0;
+
     let clock;
     let paused = true;
     let breaktime = false;
     let configurable = true;
-    
+
     onMount(() => {
         break_audio.volume = 0.7;
         work_audio.volume = 0.7;
-        const local_work = +localStorage.getItem('work_minutes');
-        const local_break = +localStorage.getItem('break_minutes');
-        if (local_work != null) {
-            work_minutes = local_work;
-            minutes = work_minutes;
-        }
-        if (local_break != null) { break_minutes = local_break; }
+
+        const local_work = localStorage.getItem('work_minutes');
+        const local_break = localStorage.getItem('break_minutes');
+        
+        if (local_work != null) { work_minutes = +local_work; }
+        if (local_break != null) { break_minutes = +local_break; }
+
+        minutes = work_minutes;
     });
 
+    // Moves the clock forward one second
     function tick() {
-        if (paused) return;
         if (minutes === 0 && seconds === 0) {
             if (breaktime) {
                 breaktime = false;
@@ -50,11 +51,12 @@
         }
     }
 
+    // Toggle pause state; on start/resume, start the clock
     function toggle_pause() {
         if (paused) {
             clock = setInterval(() => {
+                if (!breaktime) { fetch('/api/inc_collective_time'); }
                 tick();
-                fetch('/api/inc_collective_time');
             }, 1000);
             paused = false;
         } else {
@@ -63,24 +65,25 @@
         }
     }
 
+    // Reset timer
     function reset() {
         clearInterval(clock);
         paused = true;
+        breaktime = false;
+        configurable = true;
         minutes = work_minutes;
         seconds = 0;
     }
 </script>
 
-<!-- Audio Files -->
-<audio src="sounds/work.mp3" type="audio/mpeg" bind:this={work_audio} />
-<audio src="sounds/break.mp3" type="audio/mpeg" bind:this={break_audio} />
-
-<!-- Head -->
 <svelte:head>
     <title>
         {paused ? 'Tomatera' : `${minutes.toString().padStart(1, '0')}:${seconds.toString().padStart(2, '0')}`}
     </title>
 </svelte:head>
+
+<audio src="sounds/work.mp3" type="audio/mpeg" bind:this={work_audio} />
+<audio src="sounds/break.mp3" type="audio/mpeg" bind:this={break_audio} />
 
 <!-- Timer Display -->
 <div class="flex gap-6 md:gap-10 mt-8">
@@ -118,7 +121,7 @@
             </div>
         {/each}
     </button>
-    <button on:click={() => { reset(); configurable=true; }} class="flex gap-1 md:gap-2 group">
+    <button on:click={reset} class="flex gap-1 md:gap-2 group">
         {#each 'RESET' as symbol}
             <div class="font-mono text-[5px] md:text-[8px] whitespace-pre font-bold leading-none text-start opacity-60 group-hover:opacity-100">
                 {ascii[symbol]}
