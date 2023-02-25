@@ -1,5 +1,12 @@
 <script>
+    import { header_text } from '../stores'; 
     import ascii from '../../data/ascii';
+
+    let text;
+
+    header_text.subscribe(value => {
+        text = value;
+    });
 
     async function getCollectiveTime() {
         const response = await fetch('/api/get_collective_time');
@@ -8,7 +15,7 @@
     }
 </script>
 
-<div class="flex flex-col gap-20 md:gap-10">
+<div class="flex flex-col gap-10 max-md:max-w-[400px]">
 
     <!-- Metrics -->
     {#await getCollectiveTime()}
@@ -26,8 +33,8 @@
     {/await}
 
     <!-- Header -->
-    <div class="flex gap-1 md:gap-3 justify-center">
-        {#each 'TOMATERA' as symbol}
+    <div class="flex gap-1 md:gap-3 justify-center opacity-60">
+        {#each text as symbol}
             <div class="font-mono text-[5px] md:text-[11px] whitespace-pre font-bold leading-none text-start">
                 {ascii[symbol]}
             </div>
