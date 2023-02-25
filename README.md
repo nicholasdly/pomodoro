@@ -19,7 +19,7 @@ What started as my first individual web development project quickly grew to beco
 
 TODO:
 
-- [ ] Add indicator of which timer (work or break) is active
+- [x] Add indicator of which timer (work or break) is active
 - [x] Redesign spacing of page elements (timer should be the only thing on the screen unless you scroll down)
 
 ## Contributing
