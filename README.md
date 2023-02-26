@@ -15,14 +15,6 @@ What started as my first individual web development project quickly grew to beco
 - Deployment: [Vercel](https://vercel.com/)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
 
-</br>
-
-TODO:
-
-- [x] Add indicator of which timer (work or break) is active
-- [x] Redesign spacing of page elements (timer should be the only thing on the screen unless you scroll down)
-- [ ] Accessibility settings (manual theme toggler, ascii font toggler)
-
 ## Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
