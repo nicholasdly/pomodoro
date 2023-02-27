@@ -107,7 +107,7 @@
         <label for="minutes" class="whitespace-pre">
             {work_minutes.toString().padStart(3, ' ')} work minutes
         </label>
-        <input class="accent-neutral-500" id="minutes" type=range bind:value={work_minutes} min=5 max=60 step=5 on:input={() => { minutes = work_minutes; }} on:change={() => localStorage.setItem('work_minutes', work_minutes.toString())} disabled={!configurable}>
+        <input class="accent-neutral-500" id="minutes" type=range bind:value={work_minutes} min=5 max=90 step=5 on:input={() => { minutes = work_minutes; }} on:change={() => localStorage.setItem('work_minutes', work_minutes.toString())} disabled={!configurable}>
     </div>
     <div class="flex items-center font-mono gap-2">
         <label for="minutes">
