@@ -1,43 +1,54 @@
 <script>
-    import { onMount } from "svelte";
     import Timer from "$lib/components/Timer.svelte";
-    import Header from "$lib/components/Header.svelte";
-
-    let theme = 'light';
-    
-    onMount(() => {
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            theme = 'dark';
-        }
-
-        if (theme === 'dark') {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-    });
+    import Footer from "$lib/components/Footer.svelte";
 </script>
-    
-<svelte:head>
-    <meta name="description" content="Tomatera is a minimalist, online automatic pomodoro timer designed to help you stay productive and keep you from distractions.">
-</svelte:head>
 
-<main>
-    <section class="flex flex-col items-center justify-center h-screen">
-        <Header />
-        <Timer />
+<main class="flex flex-col items-center">
+
+    <Timer />
+
+    <section class="flex flex-col font-mono font-semibold md:text-xl mx-10 mb-20 max-w-[800px] gap-10">
+        
+        <h1 class="text-2xl md:text-4xl text-center">
+            The open-source pomodoro timer made to streamline your productivity.
+        </h1>
+
+        <div>
+            <h2 class="text-xl md:text-3xl underline">
+                What is Tomatera?
+            </h2>
+            <p>
+                Tomatera is an ad-free, open-source pomodoro timer developed by an undergraduate computer science student.
+                With a focus on simple yet effective and functional design, Tomatera can boost your productivity by helping you apply the famous pomodoro technique to your life.
+                Automated with audio cues, Tomatera is fully functional on desktop and mobile internet browsers, with plans to expand to standalone software.
+            </p>
+        </div>
+
+        <div>
+            <h2 class="text-xl md:text-3xl underline">
+                What is the pomodoro technique?
+            </h2>
+            <p>
+                Developed by Francesco Cirillo in the late 1980s, the pomodoro technique is a method of time management that utilizes designated work and break intervals.
+                The technique was named after the Spanish word for tomato, due to Cirillo's use of a tomato shaped kitchen timer which he used as a university student.
+            </p>
+        </div>
+
+        <div>
+            <h2 class="text-xl md:text-3xl underline">
+                How do I use Tomatera?
+            </h2>
+            <ol>
+                <li>1. Add tasks to the to-do list.</li>
+                <li>2. Adjust the timer intervals to your liking.</li>
+                <li>3. Start the timer and focus on your tasks during the work interval.</li>
+                <li>4. When the alarm rings, take a break during the break interval.</li>
+                <li>5. When the alarm rings again, focus again and repeat until all your tasks are done!</li>
+            </ol>
+        </div>
+
     </section>
-    <section class="flex flex-col items-center mb-16 md:mb-10">
-        <p class="font-mono font-semibold md:text-xl mx-10 max-w-[800px] text-center">
-            Tomatera is an open source automatic pomodoro timer, meaning the timer above will automatically switch between a "work" timer and a "break" timer. A sound will be played at the end of each timer.<br/><br/>
-            By taking short, routine breaks during a designated time of focus, people generally find it easier to stay motivated and productive. <br/><br/>
-            Check out the source code <a href="https://github.com/nicholasdly/tomatera.dev" rel="noopener noreferrer" target="_blank" class="underline">here</a>, or take a look at my personal website <a href="https://www.nicholasly.com" rel="noopener noreferrer" target="_blank" class="underline">here</a>.
-        </p>
-    </section>
-    <section>
-        <p class="flex flex-col items-center mt-20 mb-3 text-center">
-            &copy; {new Date().getFullYear()} Nicholas Ly. All rights reserved. <br/>
-            This website is open source under a MIT License.
-        </p>
-    </section>
+
+    <Footer />
+
 </main>

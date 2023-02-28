@@ -1,15 +1,17 @@
 <script>
     import { onMount } from 'svelte';
-    import { header_text } from '../stores';
-    import ascii from '../../data/ascii';
+    import Header from '$lib/components/Header.svelte';
+    import ascii from '$lib/data/ascii';
 
     let break_audio, work_audio;
 
-    // Duration of each round
+    let header_text = 'TOMATERA';
+
+    // Duration of each interval
     let work_minutes = 25;
     let break_minutes = 5;
     
-    // Displayed time variables
+    // Displayed time values
     let minutes = 0;
     let seconds = 0;
 
@@ -22,9 +24,9 @@
         break_audio.volume = 0.7;
         work_audio.volume = 0.7;
 
+        // Retrieve and set interval durations from browser local storage
         const local_work = localStorage.getItem('work_minutes');
         const local_break = localStorage.getItem('break_minutes');
-        
         if (local_work != null) { work_minutes = +local_work; }
         if (local_break != null) { break_minutes = +local_break; }
 
@@ -44,7 +46,7 @@
                 break_audio.play();
             }
             seconds = 0;
-            header_text.set(breaktime ? 'BREAK!' : 'WORKING?');
+            header_text = breaktime ? 'BREAK' : 'FOCUS';
         } else if (seconds === 0) {
             minutes--;
             seconds = 59;
@@ -65,7 +67,7 @@
             clearInterval(clock);
             paused = true;
         }
-        header_text.set(breaktime ? 'BREAK!' : 'WORKING?');
+        header_text = breaktime ? 'BREAK' : 'FOCUS';
     }
 
     // Reset timer
@@ -76,61 +78,94 @@
         configurable = true;
         minutes = work_minutes;
         seconds = 0;
-        header_text.set('TOMATERA');
+        header_text = 'TOMATERA';
+    }
+
+    // Fetches collective productive time in seconds
+    async function getCollectiveTime() {
+        const response = await fetch('/api/get_collective_time');
+        if (response.ok) return await response.json();
+        throw new Error( await response.text() );
     }
 </script>
 
-<!-- Webpage title matches timer display -->
+<!-- Page title matches timer display -->
 <svelte:head>
     <title>
-        {paused ? 'TOMATERA' : `${minutes.toString().padStart(1, '0')}:${seconds.toString().padStart(2, '0')}`}
+        {paused ? 'TOMATERA' : `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`}
     </title>
 </svelte:head>
 
 <audio src="sounds/work.mp3" type="audio/mpeg" bind:this={work_audio} />
 <audio src="sounds/break.mp3" type="audio/mpeg" bind:this={break_audio} />
 
-<!-- Timer Display -->
-<div class="flex gap-6 md:gap-10 mt-24 mb-16">
-    {#each `${minutes.toString().padStart(1, '0')}:${seconds.toString().padStart(2, '0')}` as symbol}
-        {#key symbol}
-            <div class="font-mono text-[10px] md:text-xl whitespace-pre font-black md:leading-5 leading-none text-start">
-                {ascii[symbol]}
-            </div>
-        {/key}
-    {/each}
-</div>
+<section class="flex flex-col items-center justify-center h-screen">
 
-<!-- Timer Settings -->
-<div class="flex flex-col items-end mb-12">
-    <div class="flex items-center font-mono gap-2">
-        <label for="minutes" class="whitespace-pre">
-            {work_minutes.toString().padStart(3, ' ')} work minutes
-        </label>
-        <input class="accent-neutral-500" id="minutes" type=range bind:value={work_minutes} min=5 max=90 step=5 on:input={() => { minutes = work_minutes; }} on:change={() => localStorage.setItem('work_minutes', work_minutes.toString())} disabled={!configurable}>
+    <div class="flex flex-col gap-10 max-md:max-w-[400px]">
+    
+        <!-- Metrics -->
+        {#await getCollectiveTime()}
+            <p class="text-center md:text-xl font-mono font-semibold mx-10">
+                Collectively, Tomatera users have been productive for over ? minutes!
+            </p>
+        {:then time} 
+            <p class="text-center md:text-xl font-mono font-semibold mx-10">
+                Collectively, Tomatera users have been productive for over {Math.floor(time / 60).toLocaleString()} minutes!
+            </p>
+        {:catch error}
+            <p class="text-center md:text-xl font-mono font-semibold mx-10">
+                Unable to load collective productive time!
+            </p>
+        {/await}
+    
+        <Header text={header_text} />
+    
     </div>
-    <div class="flex items-center font-mono gap-2">
-        <label for="minutes">
-            {break_minutes} break minutes
-        </label>
-        <input class="accent-neutral-500" id="minutes" type=range bind:value={break_minutes} min=1 max=20 step=1 on:change={() => localStorage.setItem('break_minutes', break_minutes.toString())} disabled={!configurable}>
+    
+    <!-- Timer Display -->
+    <div class="flex gap-6 md:gap-10 mt-8">
+        {#each `${minutes.toString().padStart(1, '0')}:${seconds.toString().padStart(2, '0')}` as symbol}
+            {#key symbol}
+                <div class="font-mono text-[10px] md:text-xl whitespace-pre font-black md:leading-5 leading-none text-start">
+                    {ascii[symbol]}
+                </div>
+            {/key}
+        {/each}
     </div>
-</div>
+    
+    <!-- Timer Settings -->
+    <div class="flex flex-col items-end mb-12">
+        <div class="flex items-center font-mono gap-2">
+            <label for="work_minutes" class="whitespace-pre">
+                {work_minutes.toString().padStart(3, ' ')} work minutes
+            </label>
+            <input class="accent-neutral-500" id="work_minutes" type=range bind:value={work_minutes} min=5 max=90 step=5 on:input={() => { minutes = work_minutes; }} on:change={() => localStorage.setItem('work_minutes', work_minutes.toString())} disabled={!configurable}>
+        </div>
+        <div class="flex items-center font-mono gap-2">
+            <label for="break_minutes">
+                {break_minutes} break minutes
+            </label>
+            <input class="accent-neutral-500" id="break_minutes" type=range bind:value={break_minutes} min=1 max=20 step=1 on:change={() => localStorage.setItem('break_minutes', break_minutes.toString())} disabled={!configurable}>
+        </div>
+    </div>
+    
+    <!-- Timer Controls -->
+    <div class="flex flex-row items-center gap-x-8 md:gap-x-16">
+        <button on:click={() => { toggle_pause(); configurable=false; }} class="flex gap-1 md:gap-2 group">
+            {#each (paused ? (configurable ? 'START' : 'RESUME') : 'PAUSE') as symbol}
+                <div class="font-mono text-[5px] md:text-[8px] whitespace-pre font-bold leading-none text-start opacity-60 group-hover:opacity-100">
+                    {ascii[symbol]}
+                </div>
+            {/each}
+        </button>
+        <button on:click={reset} class="flex gap-1 md:gap-2 group">
+            {#each 'RESET' as symbol}
+                <div class="font-mono text-[5px] md:text-[8px] whitespace-pre font-bold leading-none text-start opacity-60 group-hover:opacity-100">
+                    {ascii[symbol]}
+                </div>
+            {/each}
+        </button>
+    </div>
 
-<!-- Timer Controls -->
-<div class="flex flex-row items-center gap-x-8 md:gap-x-16">
-    <button on:click={() => { toggle_pause(); configurable=false; }} class="flex gap-1 md:gap-2 group">
-        {#each (paused ? (configurable ? 'START' : 'RESUME') : 'PAUSE') as symbol}
-            <div class="font-mono text-[5px] md:text-[8px] whitespace-pre font-bold leading-none text-start opacity-60 group-hover:opacity-100">
-                {ascii[symbol]}
-            </div>
-        {/each}
-    </button>
-    <button on:click={reset} class="flex gap-1 md:gap-2 group">
-        {#each 'RESET' as symbol}
-            <div class="font-mono text-[5px] md:text-[8px] whitespace-pre font-bold leading-none text-start opacity-60 group-hover:opacity-100">
-                {ascii[symbol]}
-            </div>
-        {/each}
-    </button>
-</div>
+</section>
+
