@@ -1,3 +1,4 @@
+import { ThemeProvider } from "@/components/theme";
 import { cn } from "@/lib/utils";
 import "@/styles/globals.css";
 import type { Metadata } from "next";
@@ -22,7 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.variable, "font-sans antialiased")}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
