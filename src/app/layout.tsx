@@ -1,5 +1,4 @@
 import "@/styles/globals.css";
-import Footer from "@/components/footer";
 import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme";
 import { cn } from "@/lib/utils";
@@ -12,7 +11,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "pomodoro.nicholasly.com",
+  title: "pomodoro by Nicholas Ly",
   description: "A pomodoro timer by Nicholas Ly.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
@@ -24,21 +23,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          inter.variable,
-          "flex h-fit min-h-screen flex-col gap-y-6 font-sans antialiased",
-        )}
-      >
+      <body className={cn(inter.variable, "font-sans antialiased")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          {children}
-          <Footer />
+          <div className="mx-auto max-w-screen-md p-4">
+            <Header />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
