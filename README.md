@@ -1,32 +1,18 @@
-# tomatera.dev
+# pomodoro
 
-## About the Project
+> A minimal pomodoro timer and to-do list.
 
-<div align='center'>
-  <img src='screenshots/dark.png' width=400 />
-  <img src='screenshots/light.png' width=400 />
-  </br></br>
-</div
+- Check it out here: [pomodoro.nicholasly.com](https://pomodoro.nicholasly.com/)
 
-What started as my first individual web development project quickly grew to become a mini passion project of mine. Made by a computer science student who actively utilizes the [pomodoro technique](https://en.wikipedia.org/wiki/Pomodoro_Technique), Tomatera is a functional yet minimal pomodoro timer to help anyone balance their time and improve their productivity.
+## Development
 
-- Framework: [SvelteKit](https://kit.svelte.dev/)
-- Database: [Supabase](https://supabase.com/)
-- Deployment: [Vercel](https://vercel.com/)
-- Styling: [Tailwind CSS](https://tailwindcss.com/)
+**pomodoro** is built with the following tools:
 
-## Contributing
-
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement". Don't forget to give the project a star! Thanks again!
-
-1. Fork this repo.
-2. Create your branch with `git checkout -b branchname`.
-3. Commit your changes with `git commit -m "Your message here!"`.
-4. Push to the branch with `git push origin branchname`.
-5. Open a pull request!
+- **Web Framework**: [Next.js](https://nextjs.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) and [shadcn/ui](https://ui.shadcn.com/)
+- **State Management**: [Zustand](https://github.com/pmndrs/zustand)
+- **Deployment**: [Vercel](https://vercel.com/)
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Licensed under the MIT License, Copyright © 2024
