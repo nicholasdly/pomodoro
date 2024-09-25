@@ -12,6 +12,7 @@ import { Button } from "./shadcn/button";
 import { PlayIcon, RotateCcwIcon, PauseIcon } from "lucide-react";
 import { useEffect } from "react";
 import { create } from "zustand";
+import { Howl } from "howler";
 
 type TimerState = {
   status: "running" | "stopped" | "paused";
@@ -19,6 +20,7 @@ type TimerState = {
   timeLeft: number;
   workTime: number;
   breakTime: number;
+  volume: number;
 };
 
 type TimerActions = {
@@ -28,7 +30,11 @@ type TimerActions = {
   reset: () => void;
   setWorkTime: (duration: number) => void;
   setBreakTime: (duration: number) => void;
+  setVolume: (volume: number) => void;
 };
+
+const WORK_SOUND = new Howl({ src: ["/sounds/work.mp3"] });
+const BREAK_SOUND = new Howl({ src: ["/sounds/break.mp3"] });
 
 const useTimerStore = create<TimerState & TimerActions>((set) => ({
   status: "stopped",
@@ -36,6 +42,7 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
   timeLeft: 25 * 60,
   workTime: 25,
   breakTime: 5,
+  volume: 50,
   tick: () =>
     set((state) => {
       if (state.timeLeft > 0) return { timeLeft: state.timeLeft - 1 };
@@ -43,6 +50,14 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
       const mode = state.mode === "working" ? "break" : "working";
       const timeLeft =
         mode === "working" ? state.workTime * 60 : state.breakTime * 60;
+
+      if (mode === "working") {
+        WORK_SOUND.volume(state.volume / 100);
+        WORK_SOUND.play();
+      } else {
+        BREAK_SOUND.volume(state.volume / 100);
+        BREAK_SOUND.play();
+      }
 
       return { mode, timeLeft };
     }),
@@ -57,6 +72,7 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
   setWorkTime: (minutes: number) =>
     set(() => ({ timeLeft: minutes * 60, workTime: minutes })),
   setBreakTime: (minutes: number) => set(() => ({ breakTime: minutes })),
+  setVolume: (volume: number) => set(() => ({ volume })),
 }));
 
 export function TimerCard() {
@@ -90,14 +106,16 @@ export function TimerCard() {
 
 export function TimerControlsCard() {
   const {
-    status: state,
+    status,
     workTime,
     breakTime,
+    volume,
     start,
     pause,
     reset,
     setWorkTime,
     setBreakTime,
+    setVolume,
   } = useTimerStore();
 
   return (
@@ -120,7 +138,7 @@ export function TimerControlsCard() {
             step={1}
             defaultValue={[workTime]}
             onValueChange={(values) => setWorkTime(values[0])}
-            disabled={state !== "stopped"}
+            disabled={status !== "stopped"}
           />
         </div>
         <div className="flex flex-col items-center gap-2">
@@ -134,14 +152,27 @@ export function TimerControlsCard() {
             step={1}
             defaultValue={[breakTime]}
             onValueChange={(values) => setBreakTime(values[0])}
-            disabled={state !== "stopped"}
+            disabled={status !== "stopped"}
+          />
+        </div>
+        <div className="flex flex-col items-center gap-2">
+          <label htmlFor="volume" className="text-nowrap text-sm">
+            {volume}% alert volume
+          </label>
+          <Slider
+            id="volume"
+            max={100}
+            min={0}
+            step={10}
+            defaultValue={[volume]}
+            onValueChange={(values) => setVolume(values[0])}
           />
         </div>
         <div className="flex items-center justify-center gap-2">
           <Button
             variant="outline"
             size="icon"
-            disabled={state === "running"}
+            disabled={status === "running"}
             onClick={start}
           >
             <PlayIcon className="size-4" />
@@ -149,7 +180,7 @@ export function TimerControlsCard() {
           <Button
             variant="outline"
             size="icon"
-            disabled={state !== "running"}
+            disabled={status !== "running"}
             onClick={pause}
           >
             <PauseIcon className="size-4" />
@@ -157,7 +188,7 @@ export function TimerControlsCard() {
           <Button
             variant="outline"
             size="icon"
-            disabled={state !== "paused"}
+            disabled={status !== "paused"}
             onClick={reset}
           >
             <RotateCcwIcon className="size-4" />
