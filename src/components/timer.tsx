@@ -134,8 +134,8 @@ export function TimerControlsCard() {
           <Slider
             id="work"
             max={90}
-            min={1}
-            step={1}
+            min={5}
+            step={5}
             defaultValue={[workTime]}
             onValueChange={(values) => setWorkTime(values[0])}
             disabled={status !== "stopped"}
