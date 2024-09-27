@@ -7,12 +7,35 @@ import {
   CardHeader,
   CardTitle,
 } from "./shadcn/card";
-import { CircleCheckIcon, PlusCircleIcon } from "lucide-react";
+import {
+  CircleCheckIcon,
+  GripVerticalIcon,
+  PlusCircleIcon,
+} from "lucide-react";
 import { Button } from "./shadcn/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./shadcn/popover";
 import { Input } from "./shadcn/input";
 import { useEffect, useState } from "react";
-import { nanoid } from "@/lib/utils";
+import { cn, nanoid } from "@/lib/utils";
+import {
+  sortableKeyboardCoordinates,
+  arrayMove,
+  useSortable,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import { restrictToVerticalAxis } from "@dnd-kit/modifiers";
 
 type Task = {
   id: string;
@@ -24,38 +47,116 @@ type TaskState = {
 };
 
 type TaskActions = {
+  setTasks: (tasks: Task[]) => void;
   addTask: (description: string) => void;
   removeTask: (id: string) => void;
 };
 
 export default function useTasks(): TaskState & TaskActions {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTaskState] = useState<Task[]>([]);
 
   // Load tasks from `localStorage` on mount.
   useEffect(() => {
-    setTasks(JSON.parse(localStorage.getItem("tasks") || "[]"));
+    setTaskState(JSON.parse(localStorage.getItem("tasks") || "[]"));
   }, []);
 
+  const setTasks = (tasks: Task[]) => {
+    setTaskState(() => {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      return tasks;
+    });
+  };
+
   const addTask = (description: string) =>
-    setTasks((previous) => {
+    setTaskState((previous) => {
       const tasks = [...previous, { id: nanoid(), description }];
       localStorage.setItem("tasks", JSON.stringify(tasks));
       return tasks;
     });
 
   const removeTask = (id: string) =>
-    setTasks((previous) => {
+    setTaskState((previous) => {
       const tasks = previous.filter((task) => task.id !== id);
       localStorage.setItem("tasks", JSON.stringify(tasks));
       return tasks;
     });
 
-  return { tasks, addTask, removeTask };
+  return { tasks, setTasks, addTask, removeTask };
+}
+
+export function Task({
+  task,
+  removeTask,
+}: {
+  task: Task;
+  removeTask: (id: string) => void;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: task.id });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+    transition,
+  };
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={style}
+      className={cn(
+        "flex w-full items-center rounded-md border p-1",
+        isDragging && "z-10 cursor-move opacity-30 ring-2 ring-primary",
+      )}
+    >
+      <Button
+        className="cursor-grab text-muted-foreground"
+        variant="ghost"
+        size="icon"
+        {...attributes}
+        {...listeners}
+      >
+        <GripVerticalIcon className="size-5" />
+        <span className="sr-only">Move task</span>
+      </Button>
+      <p className="ml-2">{task.description}</p>
+      <Button
+        className="ml-auto shrink-0 justify-self-end rounded-full"
+        variant="ghost"
+        size="icon"
+        onClick={() => removeTask(task.id)}
+      >
+        <CircleCheckIcon className="size-4" />
+        <span className="sr-only">Complete task</span>
+      </Button>
+    </div>
+  );
 }
 
 export function TasksCard() {
-  const { tasks, addTask, removeTask } = useTasks();
+  const { tasks, setTasks, addTask, removeTask } = useTasks();
   const [input, setInput] = useState("");
+  const sensors = useSensors(
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    }),
+  );
+
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+    if (over && active.id !== over.id) {
+      const oldIndex = tasks.findIndex((task) => task.id === active.id);
+      const newIndex = tasks.findIndex((task) => task.id === over.id);
+      setTasks(arrayMove(tasks, oldIndex, newIndex));
+    }
+  };
 
   return (
     <Card>
@@ -67,22 +168,21 @@ export function TasksCard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
-        {tasks.map((task) => (
-          <div
-            key={task.id}
-            className="flex items-center justify-between rounded-md border p-2"
-          >
-            <p className="ml-2">{task.description}</p>
-            <Button
-              className="shrink-0"
-              variant="ghost"
-              size="icon"
-              onClick={() => removeTask(task.id)}
-            >
-              <CircleCheckIcon className="size-4" />
-            </Button>
-          </div>
-        ))}
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragEnd={handleDragEnd}
+          modifiers={[restrictToVerticalAxis]}
+        >
+          <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+            {tasks.map((task) => (
+              // I'm annoyed that I have to pass `removeTask` to each task,
+              // but calling the `useTasks` hook in the `TaskCard` component
+              // doesn't seem to be working.
+              <Task key={task.id} task={task} removeTask={removeTask} />
+            ))}
+          </SortableContext>
+        </DndContext>
         <Popover>
           <PopoverTrigger asChild>
             <Button
