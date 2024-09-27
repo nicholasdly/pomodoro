@@ -149,6 +149,10 @@ export function TasksCard() {
     }),
   );
 
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  }, [input]);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
     if (over && active.id !== over.id) {
