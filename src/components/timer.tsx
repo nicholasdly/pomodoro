@@ -72,7 +72,11 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
   setWorkTime: (minutes: number) =>
     set(() => ({ timeLeft: minutes * 60, workTime: minutes })),
   setBreakTime: (minutes: number) => set(() => ({ breakTime: minutes })),
-  setVolume: (volume: number) => set(() => ({ volume })),
+  setVolume: (volume: number) => {
+    set(() => ({ volume }))
+    BREAK_SOUND.volume(volume / 100);
+    BREAK_SOUND.play();
+  },
 }));
 
 export function TimerCard() {
