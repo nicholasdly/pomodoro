@@ -75,6 +75,52 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
   setVolume: (volume: number) => set(() => ({ volume })),
 }));
 
+// export function TimerCard() {
+//   const { status, mode, timeLeft, tick } = useTimerStore();
+
+//   // Function to update the tab title with the time left
+//   function updateTabTitle(minutes: string, seconds: string, mode: string) {
+//     document.title = `${minutes}:${seconds} - ${mode === "working" ? "Work" : "Break"} Timer`;
+//   }
+
+//   // Start the timer when the timer state is "running".
+//   useEffect(() => {
+//     const isActive = status === "running";
+//     const interval = isActive
+//       ? setInterval(() => {
+//           tick();
+
+//           // Calculate the minutes and seconds from timeLeft
+//           const minutes = Math.floor(timeLeft / 60)
+//             .toString()
+//             .padStart(2, "0");
+//           const seconds = (timeLeft % 60).toString().padStart(2, "0");
+
+//           // Update the tab title with the current time left
+//           updateTabTitle(minutes, seconds, mode);
+//         }, 1000)
+//       : null;
+
+//     return () => {
+//       if (interval) clearInterval(interval);
+//     };
+//   }, [status, tick, timeLeft, mode]);
+
+//   const state = status === "running" ? mode : status;
+//   const seconds = (timeLeft % 60).toString().padStart(2, "0");
+//   const minutes = Math.floor(timeLeft / 60)
+//     .toString()
+//     .padStart(2, "0");
+
+//   return (
+//     <Card className="flex h-full flex-col items-center justify-center p-6">
+//       <p className="font-base font-mono text-7xl">
+//         {minutes}:{seconds}
+//       </p>
+//       <p className="text-sm uppercase tracking-wider">{state}</p>
+//     </Card>
+//   );
+// }
 export function TimerCard() {
   const { status, mode, timeLeft, tick } = useTimerStore();
 
@@ -87,6 +133,20 @@ export function TimerCard() {
       if (interval) clearInterval(interval);
     };
   }, [status, tick]);
+
+  // Update the site title with the remaining time
+  useEffect(() => {
+    const seconds = (timeLeft % 60).toString().padStart(2, "0");
+    const minutes = Math.floor(timeLeft / 60)
+      .toString()
+      .padStart(2, "0");
+
+    if (status === "running") {
+      document.title = `${minutes}:${seconds} - ${mode === "working" ? "Work" : "Break"} Time`;
+    } else {
+      document.title = "Pomodoro Timer";
+    }
+  }, [timeLeft, status, mode]);
 
   const state = status === "running" ? mode : status;
   const seconds = (timeLeft % 60).toString().padStart(2, "0");
