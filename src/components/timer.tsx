@@ -73,9 +73,9 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
     set(() => ({ timeLeft: minutes * 60, workTime: minutes })),
   setBreakTime: (minutes: number) => set(() => ({ breakTime: minutes })),
   setVolume: (volume: number) => {
-    set(() => ({ volume }))
+    set(() => ({ volume }));
     BREAK_SOUND.volume(volume / 100);
-    WORK_SOUND.volume(volume / 100)
+    WORK_SOUND.volume(volume / 100);
     BREAK_SOUND.play();
   },
 }));
