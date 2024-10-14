@@ -75,6 +75,7 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
   setVolume: (volume: number) => {
     set(() => ({ volume }))
     BREAK_SOUND.volume(volume / 100);
+    WORK_SOUND.volume(volume / 100)
     BREAK_SOUND.play();
   },
 }));
