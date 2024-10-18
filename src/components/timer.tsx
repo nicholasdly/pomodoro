@@ -93,6 +93,20 @@ export function TimerCard() {
     };
   }, [status, tick]);
 
+  // Update the site title with the remaining time.
+  useEffect(() => {
+    const seconds = (timeLeft % 60).toString().padStart(2, "0");
+    const minutes = Math.floor(timeLeft / 60)
+      .toString()
+      .padStart(2, "0");
+
+    if (status === "running") {
+      document.title = `${minutes}:${seconds} - ${mode === "working" ? "Work" : "Break"}`;
+    } else {
+      document.title = "pomodoro by Nicholas Ly";
+    }
+  }, [timeLeft, status, mode]);
+
   const state = status === "running" ? mode : status;
   const seconds = (timeLeft % 60).toString().padStart(2, "0");
   const minutes = Math.floor(timeLeft / 60)
