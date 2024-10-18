@@ -88,7 +88,7 @@ export function TimerCard() {
     };
   }, [status, tick]);
 
-  // Update the site title with the remaining time
+  // Update the site title with the remaining time.
   useEffect(() => {
     const seconds = (timeLeft % 60).toString().padStart(2, "0");
     const minutes = Math.floor(timeLeft / 60)
@@ -96,9 +96,9 @@ export function TimerCard() {
       .padStart(2, "0");
 
     if (status === "running") {
-      document.title = `${minutes}:${seconds} - ${mode === "working" ? "Work" : "Break"} Time`;
+      document.title = `${minutes}:${seconds} - ${mode === "working" ? "Work" : "Break"}`;
     } else {
-      document.title = "Pomodoro Timer";
+      document.title = "pomodoro by Nicholas Ly";
     }
   }, [timeLeft, status, mode]);
 
