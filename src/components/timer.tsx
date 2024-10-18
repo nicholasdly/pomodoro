@@ -52,10 +52,8 @@ const useTimerStore = create<TimerState & TimerActions>((set) => ({
         mode === "working" ? state.workTime * 60 : state.breakTime * 60;
 
       if (mode === "working") {
-        WORK_SOUND.volume(state.volume / 100);
         WORK_SOUND.play();
       } else {
-        BREAK_SOUND.volume(state.volume / 100);
         BREAK_SOUND.play();
       }
 
