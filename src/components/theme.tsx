@@ -1,7 +1,5 @@
 "use client";
 
-import { ThemeProvider as NextThemesProvider, useTheme } from "next-themes";
-import { type ThemeProviderProps } from "next-themes/dist/types";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,10 +8,7 @@ import {
 } from "./shadcn/dropdown-menu";
 import { SunIcon, MoonIcon, LaptopIcon } from "lucide-react";
 import { Button } from "./shadcn/button";
-
-export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
-}
+import { useTheme } from "next-themes";
 
 export function ThemeToggle() {
   const { setTheme } = useTheme();
